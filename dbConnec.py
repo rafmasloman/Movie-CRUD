@@ -7,7 +7,8 @@ def main() :
       print(">>>> Selamat Datang di Movie List Python <<<<")
       print("1. Daftar Film")
       print("2. Tambah Film")
-      print("3. Keluar")
+      print("3. Hapus Film")
+      print("4. Keluar")
       chooseMenu(check)
       enter_app = input("Ingin Keluar ? Yes/No : ")
       if(enter_app == 'yes'):
@@ -24,6 +25,8 @@ def chooseMenu(check) :
     if(int(pilih) == 2):
       addMovie()
     if(int(pilih) == 3):
+      deleteFilm()
+    if(int(pilih) == 4):
       check = False
 
 def seefilm() :
@@ -35,6 +38,17 @@ def seefilm() :
     movies = cursor.fetchall()
     for movie in movies:
           print('{}.{}'.format(movie[0],movie[1]))
+
+def deleteFilm():
+      idFilm = input("Nomor Film : ")
+      db = database()
+      cursor = db.cursor()
+
+      sql = """DELETE from movies
+              WHERE movie_id = {} """.format(int(idFilm))
+      
+      cursor.execute(sql)
+      db.commit()
 
 def addMovie():
       name = input("Nama Film : ")
